@@ -6,7 +6,7 @@ Bash script for creating and uploading files to Github Releases.
 
 You can download into a PATH directory from a stable release and chmod:
 
-	$ wget -O /usr/local/bin/gh-release https://github.com/progrium/gh-release/releases/download/v0.0.1/gh-release
+	$ wget -O /usr/local/bin/gh-release https://github.com/progrium/gh-release/releases/download/v1.0.0/gh-release
 	$ chmod +x /usr/local/bin/gh-release
 
 Or you can clone the repo and have it install to `/usr/local/bin/gh-release`:
