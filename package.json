@@ -1,0 +1,9 @@
+{
+  "name": "gh-release",
+  "version": "0.0.1",
+  "description": "Simple script for automating Github releases with file uploads",
+  "global": "true",
+  "install": "make install",
+  "scripts": [ "gh-release" ]
+}
+
