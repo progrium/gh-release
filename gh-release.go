@@ -55,7 +55,7 @@ func MimeType(args []string) int {
 	mime.AddExtensionType(".gz", "application/gzip")
 	mime.AddExtensionType(".tgz", "application/gzip")
 	mime.AddExtensionType(".tar", "application/tar")
-	mime.AddExtensionType(".tar", "application/zip")
+	mime.AddExtensionType(".zip", "application/zip")
 	mimetype := mime.TypeByExtension(ext)
 	if mimetype != "" {
 		fmt.Println(mimetype)

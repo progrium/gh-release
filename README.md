@@ -21,9 +21,9 @@ Put any assets you want to upload with your release into a `release` directory. 
 
 	$ gh-release create progrium/gh-release 1.0.0
 
-This will create the release then upload any files in the `release` directory. Optionally, you can pass the branch to tag the release from, as well as a name for the release. 
+This will create a tagged release `v1.0.0` then upload any files found in the `./release` directory. Optional arguments you can pass include the branch to tag the release from and a name for the release. 
 
-See this project's Makefile for a full example of using it in a Makefile.
+See this project's Makefile for a real example of using it in a Makefile.
 
 #### Destroying a release
 
@@ -31,7 +31,7 @@ You can destroy a release by the version number you used to create the release:
 
 	$ gh-release destroy progrium/gh-release 1.0.0
 
-This destroys the release and its assets, as well as the tag created for the release.
+This destroys the release and its assets, as well as the `v1.0.0` tag created for the release.
 
 ## Sponsor
 
