@@ -10,23 +10,18 @@ Download and uncompress the appropriate binary from [releases](https://github.co
 
 ## Using gh-release
 
-```
-$ gh-release 
-Usage: gh-release create|destroy <reponame> <version> [branch] [name]
-
-```
-
 You need to have a [Github personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use) defined in your environment as `GITHUB_ACCESS_TOKEN`.
+
+	$ gh-release 
+	Usage: gh-release create|destroy <reponame> <version> [branch] [name]
 
 #### Creating a release with assets
 
-First, put any assets you want to upload with your release into a `release` directory. Then call `gh-release`. Here is an example:
+Put any assets you want to upload with your release into a `release` directory. Then call `gh-release`. Here is an example:
 
 	$ gh-release create progrium/gh-release 1.0.0
 
-This will create the release then upload any files in the `release` directory.
-
-Optionally, you can pass the branch to tag the release from, as well as a name for the release. 
+This will create the release then upload any files in the `release` directory. Optionally, you can pass the branch to tag the release from, as well as a name for the release. 
 
 See this project's Makefile for a full example of using it in a Makefile.
 
