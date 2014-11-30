@@ -1,16 +1,21 @@
-REPO=progrium/gh-release
-VERSION=1.0.0
+NAME=gh-release
+HARDWARE=$(shell uname -m)
+VERSION=2.0.0
 
-install:
-	install gh-release /usr/local/bin
+build:
+	go-bindata bash
+	mkdir -p build/linux && GOOS=linux go build -o build/linux/$(NAME)
+	mkdir -p build/darwin && GOOS=darwin go build -o build/darwin/$(NAME)
 
-release:
-	rm -rf release
-	mkdir release
-	echo "$(VERSION)" > release/version
-	echo "$(VERSION)" > release/name
-	echo "$(REPO)" > release/repo
-	cp ./gh-release release/gh-release
-	./gh-release gh-release
+deps:
+	go get github.com/jteeuwen/go-bindata/...
+	go get github.com/progrium/gh-release
+	go get || true
 
-.PHONY: release
+release: build
+	rm -rf release && mkdir release
+	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
+	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
+	build/darwin/gh-release create progrium/$(NAME) $(VERSION)
+
+.PHONY: release build deps
