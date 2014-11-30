@@ -1,0 +1,12 @@
+dependencies:
+  pre:
+    - make deps
+  override:
+    - make build
+
+test:
+  override:
+    - tests/shunit2:
+        parallel: true
+        files:
+          - tests/*.sh

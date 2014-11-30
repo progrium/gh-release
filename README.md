@@ -1,39 +1,42 @@
 # gh-release
 
-Bash script for creating and uploading files to Github Releases.
+Utility for creating, deleting, and uploading files to Github Releases.
+
+[![Circle CI](https://circleci.com/gh/progrium/gh-release.png?style=shield)](https://circleci.com/gh/progrium/gh-release)
 
 ## Getting gh-release
 
-You can download into a PATH directory from a stable release and chmod:
-
-	$ wget -O /usr/local/bin/gh-release https://github.com/progrium/gh-release/releases/download/v1.0.0/gh-release
-	$ chmod +x /usr/local/bin/gh-release
-
-Or you can clone the repo and have it install to `/usr/local/bin/gh-release`:
-
-	$ make install
-
-## Dependencies
-
-It currently depends on `jq`, so just `apt-get` or `brew` install `jq` if you don't have it.
-
-Also, [get a GitHub personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use) and put it in the environment variable `GITHUB_ACCESS_TOKEN`. Ideally you should export this in your `.profile` file. 
+Download and uncompress the appropriate binary from [releases](https://github.com/progrium/gh-release/releases).
 
 ## Using gh-release
 
-First, when you run gh-release, it's going to create a tag and release from your repo's master branch. So be sure you've pushed to master before running gh-release.
+```
+$ gh-release 
+Usage: gh-release create|destroy <reponame> <version> [branch] [name]
 
-Next, gh-release assumes you'll be calling from a Makefile that also created a `release` directory. In this directory you put your files to upload. You also put several files to help gh-release:
+```
 
- * release/repo: The user and repo name to use for the release. Example: "progrium/gh-release"
- * release/version: The version to use for release. "1.0.1" will result in a release/tag called "v1.0.1"
- * release/name: Optional name to use of the release. Without this, Github uses the version as the name
+You need to have a [Github personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use) defined in your environment as `GITHUB_ACCESS_TOKEN`.
 
-Once you have a `release` directory with at least `repo` and `version` files and the files to upload, you can run `gh-release` from the parent directory of `release` (ie, where Makefile runs). 
+#### Creating a release with assets
 
-By default, it will look for `*.tgz` files to upload. But you can change this by passing an argument like `gh-release *.zip` or `gh-release myfile`, where `myfile` is a single file in `release` you want to upload. 
+First, put any assets you want to upload with your release into a `release` directory. Then call `gh-release`. Here is an example:
 
-See this project's Makefile for an example.
+	$ gh-release create progrium/gh-release 1.0.0
+
+This will create the release then upload any files in the `release` directory.
+
+Optionally, you can pass the branch to tag the release from, as well as a name for the release. 
+
+See this project's Makefile for a full example of using it in a Makefile.
+
+#### Destroying a release
+
+You can destroy a release by the version number you used to create the release:
+
+	$ gh-release destroy progrium/gh-release 1.0.0
+
+This destroys the release and its assets, as well as the tag created for the release.
 
 ## Sponsor
 
