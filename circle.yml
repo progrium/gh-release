@@ -10,3 +10,9 @@ test:
         parallel: true
         files:
           - tests/*.sh
+
+deployment:
+  release:
+    branch: release
+    commands:
+      - make release
