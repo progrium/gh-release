@@ -29,7 +29,7 @@ release-destroy() {
 }
 
 usage() {
-	echo "Usage: gh-release create|destroy <reponame> <version> [branch] [name]"
+	echo "Usage: gh-release [-v] create|destroy <reponame> <version> [branch] [name]"
 	echo
 }
 
@@ -38,6 +38,7 @@ main() {
 	case "$1" in
 		create)		shift; release-create "$@";;
 		destroy)	shift; release-destroy "$@";;
+		-v)			echo "$VERSION";;
 		*)			usage;;
 	esac
 }
