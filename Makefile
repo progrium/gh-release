@@ -9,8 +9,8 @@ build:
 	mkdir -p build/Darwin && GOOS=darwin go build -o build/Darwin/$(NAME)
 
 deps:
-	go get -u github.com/jteeuwen/go-bindata
-	go get -u github.com/progrium/gh-release
+	go get -u github.com/jteeuwen/go-bindata/...
+	go get -u github.com/progrium/gh-release/...
 	go get || true
 
 test: build
