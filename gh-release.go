@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"mime"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/progrium/go-basher"
@@ -13,7 +14,7 @@ import (
 
 func assert(err error) {
 	if err != nil {
-		println("!!", err)
+		println("!!", err.Error())
 		os.Exit(2)
 	}
 }
@@ -41,7 +42,7 @@ func ReleaseIdFromTagname(args []string) int {
 	assert(json.Unmarshal(bytes, &releases))
 	for _, release := range releases {
 		if release["tag_name"].(string) == tagname {
-			fmt.Printf("%s\n", release["id"])
+			fmt.Println(strconv.Itoa(int(release["id"].(float64))))
 			return 0
 		}
 	}
