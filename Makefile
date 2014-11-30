@@ -1,16 +1,15 @@
 NAME=gh-release
 HARDWARE=$(shell uname -m)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-VERSION=2.0.2
+VERSION=2.1.0
 
 build:
 	go-bindata bash
-	mkdir -p build/Linux && GOOS=linux go build -o build/Linux/$(NAME)
-	mkdir -p build/Darwin && GOOS=darwin go build -o build/Darwin/$(NAME)
+	mkdir -p build/Linux  && GOOS=linux  go build -ldflags "-X main.Version $(VERSION)" -o build/Linux/$(NAME)
+	mkdir -p build/Darwin && GOOS=darwin go build -ldflags "-X main.Version $(VERSION)" -o build/Darwin/$(NAME)
 
 deps:
 	go get -u github.com/jteeuwen/go-bindata/...
-	go get -u github.com/progrium/gh-release/...
 	go get || true
 
 test: build

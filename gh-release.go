@@ -12,6 +12,8 @@ import (
 	"github.com/progrium/go-basher"
 )
 
+var Version string
+
 func assert(err error) {
 	if err != nil {
 		println("!!", err.Error())
@@ -66,6 +68,7 @@ func MimeType(args []string) int {
 }
 
 func main() {
+	os.Setenv("VERSION", Version)
 	basher.Application(map[string]func([]string) int{
 		"upload-url":              UploadUrl,
 		"release-id-from-tagname": ReleaseIdFromTagname,
