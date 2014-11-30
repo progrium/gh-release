@@ -1,7 +1,7 @@
 NAME=gh-release
 HARDWARE=$(shell uname -m)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-VERSION=2.1.0
+VERSION=2.1.1
 
 build:
 	go-bindata bash
