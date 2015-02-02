@@ -8,7 +8,7 @@ build:
 	mkdir -p build/Darwin && GOOS=darwin go build -ldflags "-X main.Version $(VERSION)" -o build/Darwin/$(NAME)
 
 deps:
-	go get -u github.com/jteeuwen/go-bindata/...
+	go get -u -f github.com/jteeuwen/go-bindata/...
 	go get || true
 
 test: build
