@@ -21,22 +21,21 @@ func assert(err error) {
 	}
 }
 
-func UploadUrl(args []string) int {
+func UploadUrl(args []string) {
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	assert(err)
 	var release map[string]interface{}
 	assert(json.Unmarshal(bytes, &release))
 	url, ok := release["upload_url"].(string)
 	if !ok {
-		return 2
+		os.Exit(2)
 	}
 	url = strings.Replace(url, "{", "", 1)
 	url = strings.Replace(url, "}", "", 1)
 	fmt.Println(url)
-	return 0
 }
 
-func ReleaseIdFromTagname(args []string) int {
+func ReleaseIdFromTagname(args []string) {
 	tagname := args[0]
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	assert(err)
@@ -45,13 +44,13 @@ func ReleaseIdFromTagname(args []string) int {
 	for _, release := range releases {
 		if release["tag_name"].(string) == tagname {
 			fmt.Println(strconv.Itoa(int(release["id"].(float64))))
-			return 0
+			return
 		}
 	}
-	return 2
+	os.Exit(2)
 }
 
-func MimeType(args []string) int {
+func MimeType(args []string) {
 	filename := args[0]
 	ext := filename[strings.LastIndex(filename, "."):]
 	mime.AddExtensionType(".gz", "application/gzip")
@@ -64,12 +63,11 @@ func MimeType(args []string) int {
 	} else {
 		fmt.Println("application/octet-stream")
 	}
-	return 0
 }
 
 func main() {
 	os.Setenv("VERSION", Version)
-	basher.Application(map[string]func([]string) int{
+	basher.Application(map[string]func([]string){
 		"upload-url":              UploadUrl,
 		"release-id-from-tagname": ReleaseIdFromTagname,
 		"mimetype":                MimeType,
