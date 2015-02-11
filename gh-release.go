@@ -1,8 +1,13 @@
 package main
 
 import (
+	"crypto/md5"
+	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"hash"
+	"io"
 	"io/ioutil"
 	"mime"
 	"os"
@@ -19,6 +24,11 @@ func assert(err error) {
 		println("!!", err.Error())
 		os.Exit(2)
 	}
+}
+
+func fatal(msg string) {
+	println("!!", msg)
+	os.Exit(2)
 }
 
 func UploadUrl(args []string) {
@@ -65,12 +75,32 @@ func MimeType(args []string) {
 	}
 }
 
+func Checksum(args []string) {
+	if len(args) < 1 {
+		fatal("No algorithm specified")
+	}
+	var h hash.Hash
+	switch args[0] {
+	case "md5":
+		h = md5.New()
+	case "sha1":
+		h = sha1.New()
+	case "sha256":
+		h = sha256.New()
+	default:
+		fatal("Algorithm '" + args[0] + "' is unsupported")
+	}
+	io.Copy(h, os.Stdin)
+	fmt.Printf("%x\n", h.Sum(nil))
+}
+
 func main() {
 	os.Setenv("VERSION", Version)
 	basher.Application(map[string]func([]string){
 		"upload-url":              UploadUrl,
 		"release-id-from-tagname": ReleaseIdFromTagname,
 		"mimetype":                MimeType,
+		"checksum":                Checksum,
 	}, []string{
 		"bash/gh-release.bash",
 	}, Asset, true)
