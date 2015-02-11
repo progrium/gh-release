@@ -29,8 +29,21 @@ release-destroy() {
 }
 
 usage() {
-	echo "Usage: gh-release [-v] create|destroy <reponame> <version> [branch] [name]"
+	echo "Usage: gh-release [-v] subcommand"
+	echo 
+	echo "Subcommands:"
+	echo "  create <reponame> <version> [branch] [name]"
+	echo "  destroy <reponame> <version>"
+	echo "  checksums <algorithm>"
 	echo
+}
+
+release-checksums() {
+	declare alg="$1"
+	echo "Writing $alg checksum files..."
+	for asset in $(ls -A release); do
+		cat "release/$asset" | checksum "$alg" > "release/${asset}.$alg"
+	done
 }
 
 main() {
@@ -38,6 +51,7 @@ main() {
 	case "$1" in
 		create)		shift; release-create "$@";;
 		destroy)	shift; release-destroy "$@";;
+		checksums)	shift; release-checksums "$@";;
 		-v)			echo "$VERSION";;
 		*)			usage;;
 	esac
