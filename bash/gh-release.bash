@@ -1,6 +1,6 @@
 
-readonly ref_endpoint="https://api.github.com/repos/%s/git/refs/tags/%s"
-readonly release_endpoint="https://api.github.com/repos/%s/releases"
+readonly ref_endpoint="${GITHUB_API_URL:-https://api.github.com}/repos/%s/git/refs/tags/%s"
+readonly release_endpoint="${GITHUB_API_URL:-https://api.github.com}/repos/%s/releases"
 readonly release_json='{"tag_name": "v%s", "name": "%s", "target_commitish": "%s"}'
 
 release-create() {
