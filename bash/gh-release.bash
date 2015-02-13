@@ -4,7 +4,7 @@ readonly release_endpoint="${GITHUB_API_URL:-https://api.github.com}/repos/%s/re
 readonly release_json='{"tag_name": "v%s", "name": "%s", "target_commitish": "%s"}'
 
 release-create() {
-	declare reponame="$1" version="$2" branch="${3:-master}" name="$4"
+	declare reponame="$1" version="${2#v}" branch="${3:-master}" name="$4"
 	local release="$(printf "$release_json" "$version" "$name" "$branch")"
 	local release_url="$(printf "$release_endpoint" "$reponame")"
 	echo "Creating release v$version from branch $branch ..."
@@ -30,7 +30,7 @@ release-destroy() {
 
 usage() {
 	echo "Usage: gh-release [-v] subcommand"
-	echo 
+	echo
 	echo "Subcommands:"
 	echo "  create <reponame> <version> [branch] [name]"
 	echo "  destroy <reponame> <version>"
