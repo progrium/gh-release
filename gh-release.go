@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"mime"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -62,7 +63,7 @@ func ReleaseIdFromTagname(args []string) {
 
 func MimeType(args []string) {
 	filename := args[0]
-	ext := filename[strings.LastIndex(filename, "."):]
+	ext := filepath.Ext(filename)
 	mime.AddExtensionType(".gz", "application/gzip")
 	mime.AddExtensionType(".tgz", "application/gzip")
 	mime.AddExtensionType(".tar", "application/tar")
