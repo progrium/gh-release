@@ -41,9 +41,15 @@ func UploadUrl(args []string) {
 	if !ok {
 		os.Exit(2)
 	}
-	url = strings.Replace(url, "{", "", 1)
-	url = strings.Replace(url, "}", "", 1)
-	fmt.Println(url)
+	i := strings.Index(url, "{")
+	if i > -1 {
+		url = url[:i]
+	}
+	i = strings.Index(url, "?")
+	if i > -1 {
+		url = url[:i]
+	}
+	fmt.Println(url + "?name=")
 }
 
 func ReleaseIdFromTagname(args []string) {
