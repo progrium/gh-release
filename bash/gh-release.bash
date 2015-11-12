@@ -20,11 +20,14 @@ release-create() {
 release-destroy() {
 	declare reponame="$1" version="$2"
 	local release_url="$(printf "$release_endpoint" "$reponame")"
-	release_id="$(curl -s "$release_url" | release-id-from-tagname "v$version")"
+    
+    [[ "$version" == [0-9]* ]] && version="v$version"
+
+	release_id="$(curl -s "$release_url?access_token=$GITHUB_ACCESS_TOKEN" | release-id-from-tagname "$version")"
 	echo "Deleting release..."
 	curl -s -X DELETE "$release_url/$release_id?access_token=$GITHUB_ACCESS_TOKEN"
 	echo "Deleting tag..."
-	tag_url="$(printf "$ref_endpoint" "$reponame" "v$version")"
+	tag_url="$(printf "$ref_endpoint" "$reponame" "$version")"
 	curl -s -X DELETE "$tag_url?access_token=$GITHUB_ACCESS_TOKEN"
 }
 
