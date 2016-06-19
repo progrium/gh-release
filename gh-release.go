@@ -49,7 +49,7 @@ func UploadUrl(args []string) {
 	if i > -1 {
 		url = url[:i]
 	}
-	fmt.Println(url + "?name=")
+	fmt.Println(url + "?name")
 }
 
 func ReleaseIdFromTagname(args []string) {
