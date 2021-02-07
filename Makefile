@@ -1,6 +1,6 @@
 NAME=gh-release
 ARCH=$(shell uname -m)
-VERSION=2.2.1
+VERSION=2.3.0
 
 build:
 	go-bindata bash
