@@ -25,7 +25,12 @@ jobs:
     - run: env
     - run: make deps
     - run: make build
-    - run: tests/shunit2 tests/*.sh
+    - name: install bats
+      run: |
+        git clone https://github.com/bats-core/bats-core.git /tmp/bats-core
+        cd /tmp/bats-core
+        ./install.sh /usr/local
+    - run: make test
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: upload packages
