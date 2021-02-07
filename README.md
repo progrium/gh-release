@@ -2,7 +2,7 @@
 
 Utility for creating, deleting, and uploading files to Github Releases.
 
-[![Circle CI](https://circleci.com/gh/progrium/gh-release.png?style=shield)](https://circleci.com/gh/progrium/gh-release)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/progrium/gh-release/CI)
 
 ## Getting gh-release
 
