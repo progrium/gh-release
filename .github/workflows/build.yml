@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - 'master'
+      - 'release'
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-20.04
+    container:
+      image: golang:1.15.7
+      env:
+        GOPATH: /go
+    strategy:
+      fail-fast: true
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: env
+    - run: make deps
+    - run: make build
+    - name: install bats
+      run: |
+        git clone https://github.com/bats-core/bats-core.git /tmp/bats-core
+        cd /tmp/bats-core
+        ./install.sh /usr/local
+    - run: make test
+      env:
+        GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: upload packages
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: build/**/*
+    - name: make release
+      run: |
+        if [[ "${GITHUB_REF#refs/heads/}" == "release" ]]; then
+          make release
+        fi
+      env:
+        GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}

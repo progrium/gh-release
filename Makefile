@@ -1,18 +1,18 @@
 NAME=gh-release
 ARCH=$(shell uname -m)
-VERSION=2.2.0
+VERSION=2.3.0
 
 build:
 	go-bindata bash
-	mkdir -p build/Linux  && GOOS=linux  go build -ldflags "-X main.Version $(VERSION)" -o build/Linux/$(NAME)
-	mkdir -p build/Darwin && GOOS=darwin go build -ldflags "-X main.Version $(VERSION)" -o build/Darwin/$(NAME)
+	mkdir -p build/Linux  && GOOS=linux  go build -ldflags "-X main.Version=$(VERSION)" -o build/Linux/$(NAME)
+	mkdir -p build/Darwin && GOOS=darwin go build -ldflags "-X main.Version=$(VERSION)" -o build/Darwin/$(NAME)
 
 deps:
-	go get -u -f github.com/jteeuwen/go-bindata/...
+	go get -u -f github.com/a-urth/go-bindata/...
 	go get || true
 
 test: build
-	tests/shunit2 tests/*.sh
+	bats tests/*.bats
 
 release: build
 	rm -rf release && mkdir release
