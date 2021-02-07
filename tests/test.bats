@@ -20,7 +20,7 @@ teardown() {
   echo "output: $output"
   [[ "$status" -eq 0 ]]
 
-  run $build destroy progrium/gh-release test
+  run $build destroy progrium/gh-release vtest
   echo "status: $status"
   echo "output: $output"
   [[ "$status" -eq 0 ]]

@@ -21,7 +21,7 @@ release-destroy() {
 	declare reponame="$1" version="$2"
 	local release_url="$(printf "$release_endpoint" "$reponame")"
 
-	version="v$version"
+    [[ "$version" == [0-9]* ]] && version="v$version"
 
 	release_id="$(curl -s -H "Authorization: token $GITHUB_ACCESS_TOKEN" "$release_url" | release-id-from-tagname "$version")"
 	echo "Deleting release..."
