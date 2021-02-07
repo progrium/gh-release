@@ -40,7 +40,7 @@ jobs:
         path: build/**/*
     - name: make release
       run: |
-        if [[ "${GITHUB_REF#refs/heads/}" == "release" ]]; then
+        if [ "${GITHUB_REF#refs/heads/}" == "release" ]; then
           make release
         fi
       env:
