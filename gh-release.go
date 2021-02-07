@@ -23,13 +23,13 @@ var Version string
 func assert(err error) {
 	if err != nil {
 		println("!!", err.Error())
-		os.Exit(2)
+		os.Exit(10)
 	}
 }
 
 func fatal(msg string) {
 	println("!!", msg)
-	os.Exit(2)
+	os.Exit(11)
 }
 
 func UploadUrl(args []string) {
@@ -39,7 +39,8 @@ func UploadUrl(args []string) {
 	assert(json.Unmarshal(bytes, &release))
 	url, ok := release["upload_url"].(string)
 	if !ok {
-		os.Exit(2)
+		println("!! could not find upload_url")
+		os.Exit(12)
 	}
 	i := strings.Index(url, "{")
 	if i > -1 {
@@ -64,7 +65,8 @@ func ReleaseIdFromTagname(args []string) {
 			return
 		}
 	}
-	os.Exit(2)
+	println("!! no tag_name found in release")
+	os.Exit(13)
 }
 
 func MimeType(args []string) {
