@@ -8,11 +8,11 @@ build:
 	mkdir -p build/Darwin && GOOS=darwin go build -ldflags "-X main.Version=$(VERSION)" -o build/Darwin/$(NAME)
 
 deps:
-	go get -u -f github.com/jteeuwen/go-bindata/...
+	go get -u -f github.com/a-urth/go-bindata/...
 	go get || true
 
 test: build
-	tests/shunit2 tests/*.sh
+	bats tests/*.bats
 
 release: build
 	rm -rf release && mkdir release

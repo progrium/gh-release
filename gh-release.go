@@ -65,7 +65,7 @@ func ReleaseIdFromTagname(args []string) {
 			return
 		}
 	}
-	println("!! no tag_name found in release")
+	println(fmt.Sprintf("!! no tag_name matching %s found in releases", tagname))
 	os.Exit(13)
 }
 

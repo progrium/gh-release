@@ -1,0 +1,16 @@
+version: 2
+
+workflows:
+  version: 2
+  build:
+    jobs:
+    - build
+
+jobs:
+  build:
+    docker:
+    - image: alpine:latest
+    steps:
+    - run:
+        name: noop
+        command: echo true
