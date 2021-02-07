@@ -40,8 +40,6 @@ jobs:
         path: build/**/*
     - name: make release
       run: |
-        if [ "${GITHUB_REF#refs/heads/}" == "release" ]; then
-          make release
-        fi
+        test "${GITHUB_REF#refs/heads/}" = "release" && make release
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
