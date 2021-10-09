@@ -7,8 +7,13 @@ release-create() {
 	declare reponame="$1" version="${2#v}" branch="${3:-master}" name="$4"
 	local release="$(printf "$release_json" "$version" "$name" "$branch")"
 	local release_url="$(printf "$release_endpoint" "$reponame")"
+	local upload_url
 	echo "Creating release v$version from branch $branch ..."
-	upload_url="$(curl -s -H "Authorization: token $GITHUB_ACCESS_TOKEN" -d "$release" "$release_url" | upload-url)"
+	if [[ -n "$DEBUG" ]]; then
+		upload_url="$(curl -H "Authorization: token $GITHUB_ACCESS_TOKEN" -d "$release" "$release_url" | upload-url)"
+	else
+		upload_url="$(curl -s -H "Authorization: token $GITHUB_ACCESS_TOKEN" -d "$release" "$release_url" | upload-url)"
+	fi
 	for asset in $(ls -A release); do
 		local name="$(basename $asset)"
 		echo "Uploading $name ..."
