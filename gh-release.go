@@ -40,6 +40,9 @@ func UploadUrl(args []string) {
 	url, ok := release["upload_url"].(string)
 	if !ok {
 		println("!! could not find upload_url")
+		if os.Getenv("DEBUG") != "" {
+			fmt.Printf("!! response: %s\n", string(bytes))
+		}
 		os.Exit(12)
 	}
 	i := strings.Index(url, "{")
