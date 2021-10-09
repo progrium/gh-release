@@ -10,7 +10,11 @@ release-create() {
 	local upload_url
 	echo "Creating release v$version from branch $branch ..."
 	if [[ -n "$DEBUG" ]]; then
-		upload_url="$(curl -H "Authorization: token $GITHUB_ACCESS_TOKEN" -d "$release" "$release_url" | upload-url)"
+		data="$(curl -H "Authorization: token $GITHUB_ACCESS_TOKEN" -d "$release" "$release_url")"
+		echo "data: $release"
+		echo "release_url: $release_url"
+		echo "response: $data"
+		upload_url="$(echo "$data" | upload-url)"
 	else
 		upload_url="$(curl -s -H "Authorization: token $GITHUB_ACCESS_TOKEN" -d "$release" "$release_url" | upload-url)"
 	fi
